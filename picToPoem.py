@@ -57,4 +57,23 @@ listOfTags.extend(listOfColors)
 print listOfTags
 #Andrei's part
 
+import urllib2
+import re
 
+# Build URL that displays poems which include at least one tag
+url = "http://poetrydb.org/lines/'"
+
+for i in listOfTags:
+        url = url + i + "|"
+        
+url = url[:len(url) - 2] + "'"
+
+# Read content of poems
+content = urllib2.urlopen(url).read()
+
+# Extract 3 lines around each match
+for i in listOfTags:
+        match[i] = p.match(((.*\n){1}.)i(.(.*\n){1}))[0]
+        
+# Display matches
+match
