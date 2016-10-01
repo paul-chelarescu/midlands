@@ -84,15 +84,3 @@ listOfTags.extend(listOfColors)
 
 print listOfTags
 #Andrei's part
-
-import urllib2
-import re
-
-# Build URL that displays poems which include at least one tag
-url = "http://poetrydb.org/lines/'"
-
-for i in listOfTags:
-        url = url + i + "|"
-        
-url = url[:len(url) - 2] + "'"
-
