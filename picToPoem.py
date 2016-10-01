@@ -11,11 +11,39 @@ listOfColors = []
 from clarifai.client import ClarifaiApi
 import json
 
+
+#The command line arguments
+import sys
+import os
+import glob
+
+
+
+if len(sys.argv) == 1:
+    imageURL = 'https://samples.clarifai.com/metro-north.jpg'
+else:
+    imageURL = sys.argv[1]
+
+
+
 #The clarifai object
 clarifaiApi = ClarifaiApi()  # assumes environment variables are set.
 
-tags = clarifaiApi.tag_image_urls('https://samples.clarifai.com/metro-north.jpg')
-colors = clarifaiApi.color_urls('https://samples.clarifai.com/metro-north.jpg')
+# tags = clarifaiApi.tag_image_urls(imageURL)
+# colors = clarifaiApi.color_urls(imageURL)
+
+tags = {}
+color = {}
+
+if imageURL.startswith('http') or imageURL.startswith('https'):
+    tags = clarifaiApi.tag_image_urls(imageURL)
+    colors = clarifaiApi.color_urls(imageURL)
+elif os.path.isfile(imageURL):
+    with open(imageURL,'rb') as image_file:
+        tags = clarifaiApi.tag_images(open(imageURL, 'rb'))
+        colors = clarifaiApi.color(open(imageURL, 'rb'))
+
+
 
 # print(json.dumps(tags, indent = 2))
 # print(json.dumps(colors, indent = 2))
@@ -68,12 +96,3 @@ for i in listOfTags:
         
 url = url[:len(url) - 2] + "'"
 
-# Read content of poems
-content = urllib2.urlopen(url).read()
-
-# Extract 3 lines around each match
-for i in listOfTags:
-        match[i] = p.match(((.*\n){1}.)i(.(.*\n){1}))[0]
-        
-# Display matches
-match
