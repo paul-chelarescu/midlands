@@ -56,3 +56,5 @@ listOfTags.extend(listOfColors)
 
 print listOfTags
 #Andrei's part
+
+
