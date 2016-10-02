@@ -18,11 +18,14 @@ import os
 import glob
 
 
-
 if len(sys.argv) == 1:
+    print "PARAM: emotions: [0 - anger] [1 - disgust] [2 - fear] [3 - joy] [4 - sadness]",
+    print "+ [Specify a URL or a location]"
+    sys.exit()
+elif len(sys.argv) == 2:
     imageURL = 'https://samples.clarifai.com/metro-north.jpg'
 else:
-    imageURL = sys.argv[1]
+    imageURL = sys.argv[2]
 
 
 
@@ -93,6 +96,15 @@ listOfTags = curatedListOfTags
 
 #Andrei's part
 
+from watson_developer_cloud import ToneAnalyzerV3
+
+
+tone_analyzer = ToneAnalyzerV3(
+        username='f0862e98-79e0-4643-afb0-4ce2eea971f4',
+        password='ciiTHIb61CRP',
+        version='2016-05-19')
+
+
 import urllib2
 import re
 import os
@@ -103,7 +115,7 @@ random.shuffle(listOfTags)
 
 # Cut tags
 listOfTags_short = listOfTags[0:14]
-
+ 
 # print listOfTags_short
 
 # Build URL that displays poems which include at least one tag
@@ -115,11 +127,15 @@ for i in listOfTags_short:
 url = url[:len(url) - 1] + "'"
 
 
+# url = "file:///home/paul/Documents/poetry.html" # DEVELOPMENT ONLY!!
 # Read content of poems
 content = urllib2.urlopen(url).read()
 
 # Split text
 content_list = content.split("\n")
+
+#The data object that is going to hold all the poems
+poems = []
 
 for count in range(0, 10):
 
@@ -140,14 +156,35 @@ for count in range(0, 10):
                 lineToAdd = lineToAdd.strip()
                 matches = matches + lineToAdd + "\n"
                 break
-# Print matches
-    # matches = matches[:-1]
-    print matches
 
 
+    # print matches
+    poemData = json.loads(json.dumps(tone_analyzer.tone(text=matches), indent=2))
+    poems.append((matches, poemData))
 
 
+# print poems[1][0]
 
+# print poems
 
+emotion = int(sys.argv[1])
+print 
+#Manual sorting, 3 is Joy
+for i in range(0, len(poems)):
+    for j in range(i, len(poems)):
+        if poems[i]\
+                [1]\
+                ["document_tone"]\
+                ["tone_categories"]\
+                [0]\
+                ["tones"]\
+                [emotion]\
+                ["score"]\
+            < poems[j][1]["document_tone"]["tone_categories"][0]["tones"][emotion]["score"]:
+                temp = poems[i]
+                poems[i] = poems[j]
+                poems[j] = temp
 
+print poems[0][0]
+# print poems
 
