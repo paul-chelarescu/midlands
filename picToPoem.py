@@ -159,7 +159,7 @@ for index in range(0, length):
 
         
 # Try many random possibilities
-for count in range(0, 36):      
+for count in range(0, 16):      
         matches = ""
 
 # Shuffle frets
