@@ -98,10 +98,18 @@ import re
 import os
 import random
 
+# Shuffle frets
+random.shuffle(listOfTags)
+
+# Cut tags
+listOfTags_short = listOfTags[1:14]
+
+print listOfTags_short
+
 # Build URL that displays poems which include at least one tag
 url = "http://poetrydb.org/lines/'"
 
-for i in listOfTags:
+for i in listOfTags_short:
         url = url + i + "|"
         
 url = url[:len(url) - 1] + "'"
@@ -119,7 +127,7 @@ content_list = content.split("\n")
 random.shuffle(content_list)
 
 # Extract a line around each match
-for i in listOfTags:
+for i in listOfTags_short:
         for line in content_list:
                 if i in line and "title" not in line and "author" not in line:
                         matches = matches + "\n" + line
