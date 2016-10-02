@@ -58,7 +58,7 @@ for i in colors["results"][0]["colors"]:
 [x.encode('UTF8') for x in listOfColors]
 
 listOfTags = [str(x) for x in listOfTags]
-listOfColors = [str(x) for x in listOfColors] 
+listOfColors = [str(x) for x in listOfColors]
 
 
 #Now to split the colors
@@ -89,7 +89,7 @@ for element in listOfTags:
         curatedListOfTags.append(element)
 
 listOfTags = curatedListOfTags
-print listOfTags
+# print listOfTags
 
 #Andrei's part
 
@@ -104,14 +104,14 @@ random.shuffle(listOfTags)
 # Cut tags
 listOfTags_short = listOfTags[0:14]
 
-print listOfTags_short
+# print listOfTags_short
 
 # Build URL that displays poems which include at least one tag
 url = "http://poetrydb.org/lines/'"
 
 for i in listOfTags_short:
-        url = url + i + "|"
-        
+    url = url + i + "|"
+
 url = url[:len(url) - 1] + "'"
 
 
@@ -128,14 +128,15 @@ random.shuffle(content_list)
 
 # Extract a line around each match
 for i in listOfTags_short:
-        for line in content_list:
-                if i in line and "title" not in line and "author" not in line:
-                        lineToAdd = line.strip()
+    for line in content_list:
+        if i in line and "title" not in line and "author" not in line:
+            lineToAdd = line.strip()
                         lineToAdd = lineToAdd[1:-2]
                         lineToAdd = lineToAdd.strip()
-                        matches = matches + "\n" + lineToAdd
-                        break         
+                        matches = matches + lineToAdd + "\n"
+                        break
 # Print matches
+matches = matches[:-1]
 print matches
 
 
