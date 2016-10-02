@@ -110,11 +110,10 @@ import re
 import os
 import random
 
-# Shuffle frets
-random.shuffle(listOfTags)
+#print listOfTags
 
 # Cut tags
-listOfTags_short = listOfTags[0:14]
+listOfTags_short = listOfTags#[0:14]
  
 # print listOfTags_short
 
@@ -134,33 +133,54 @@ content = urllib2.urlopen(url).read()
 # Split text
 content_list = content.split("\n")
 
+content_list = [line for line in content_list if line.strip() != '']
+
 #The data object that is going to hold all the poems
 poems = []
 
-for count in range(0, 10):
+length = len(content_list)
+ok = False
 
-    matches = ""
+new_list = []
+
+# Formalize lines and join pairs
+for index in range(0, length):
+               
+        content_list[index] = content_list[index].strip()
+        content_list[index] = content_list[index][1:-2]
+        content_list[index] = content_list[index].strip()
+        content_list[index] = content_list[index].replace("\\", "")
+        content_list[index] = content_list[index].replace("-", "")
+        content_list[index] = content_list[index].replace("_", "")
+        content_list[index] = content_list[index].replace("\"", "")
+
+        if(index % 2 == 0):
+                new_list.append(content_list[index - 1] + "\n" + content_list[index] + "\n---------")
+
+        
+# Try many random possibilities
+for count in range(0, 36):      
+        matches = ""
 
 # Shuffle frets
-    random.shuffle(listOfTags_short)
+        random.shuffle(listOfTags)
+        listOfTags_short = listOfTags[0:14]
 
 # Shuffle it
-    random.shuffle(content_list)
+        random.shuffle(content_list)
 
 # Extract a line around each match
-    for i in listOfTags_short:
-        for line in content_list:
-            if i in line and "title" not in line and "author" not in line:
-                lineToAdd = line.strip()
-                lineToAdd = lineToAdd[1:-2]
-                lineToAdd = lineToAdd.strip()
-                matches = matches + lineToAdd + "\n"
-                break
+        for i in listOfTags_short:
+                for line in content_list:
+                        if i in line and "title" not in line and "author" not in line:
+                                matches = matches + line + "\n"
+                                break
+                               
 
 
-    # print matches
-    poemData = json.loads(json.dumps(tone_analyzer.tone(text=matches), indent=2))
-    poems.append((matches, poemData))
+        # print matches + "\n ------------------------ \n"
+        poemData = json.loads(json.dumps(tone_analyzer.tone(text=matches), indent=2))
+        poems.append((matches, poemData))
 
 
 # print poems[1][0]
@@ -168,7 +188,7 @@ for count in range(0, 10):
 # print poems
 
 emotion = int(sys.argv[1])
-print 
+# print 
 #Manual sorting, 3 is Joy
 for i in range(0, len(poems)):
     for j in range(i, len(poems)):
