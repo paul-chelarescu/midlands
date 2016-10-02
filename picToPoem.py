@@ -82,7 +82,15 @@ listOfColors = newListOfColors
 
 listOfTags.extend(listOfColors)
 
+curatedListOfTags = []
+
+for element in listOfTags:
+    if element.isalpha():
+        curatedListOfTags.append(element)
+
+listOfTags = curatedListOfTags
 print listOfTags
+
 #Andrei's part
 
 import urllib2
