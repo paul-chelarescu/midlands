@@ -131,10 +131,10 @@ for i in listOfTags_short:
     for line in content_list:
         if i in line and "title" not in line and "author" not in line:
             lineToAdd = line.strip()
-                        lineToAdd = lineToAdd[1:-2]
-                        lineToAdd = lineToAdd.strip()
-                        matches = matches + lineToAdd + "\n"
-                        break
+            lineToAdd = lineToAdd[1:-2]
+            lineToAdd = lineToAdd.strip()
+            matches = matches + lineToAdd + "\n"
+            break
 # Print matches
 matches = matches[:-1]
 print matches
