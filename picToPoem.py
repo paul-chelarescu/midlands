@@ -96,6 +96,7 @@ print listOfTags
 import urllib2
 import re
 import os
+import random
 
 # Build URL that displays poems which include at least one tag
 url = "http://poetrydb.org/lines/'"
@@ -111,10 +112,16 @@ content = urllib2.urlopen(url).read()
 
 matches = ""
 
+# Split text
+content_list = content.split("\n")
+
+# Shuffle it
+random.shuffle(content_list)
+
 # Extract a line around each match
 for i in listOfTags:
-        for line in content.split("\n"):
-                if i in line:
+        for line in content_list:
+                if i in line and "title" not in line and "author" not in line:
                         matches = matches + "\n" + line
                         break         
 # Print matches
