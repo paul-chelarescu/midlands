@@ -119,7 +119,7 @@ listOfTags_short = listOfTags#[0:14]
 # print listOfTags_short
 
 # Build URL that displays poems which include at least one tag
-url = "http://poetrydb.org/author,author,author,lines/Shakespeare;Milton;Byron;'"
+url = "http://poetrydb.org/author,author,author,author,lines/Shelley;Shakespeare;Milton;Byron;'"
 
 for i in listOfTags_short:
     url = url + i + "|"
