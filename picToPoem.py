@@ -189,7 +189,7 @@ for count in range(0, 16):
 # print poems
 
 emotion = int(sys.argv[1])
-# print 
+print 
 #Manual sorting, 3 is Joy
 for i in range(0, len(poems)):
     for j in range(i, len(poems)):
