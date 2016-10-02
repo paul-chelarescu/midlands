@@ -102,7 +102,7 @@ import random
 random.shuffle(listOfTags)
 
 # Cut tags
-listOfTags_short = listOfTags[1:14]
+listOfTags_short = listOfTags[0:14]
 
 print listOfTags_short
 
