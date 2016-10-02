@@ -126,7 +126,7 @@ for count in range(0, 10):
     matches = ""
 
 # Shuffle frets
-    random.shuffle(listOfTags)
+    random.shuffle(listOfTags_short)
 
 # Shuffle it
     random.shuffle(content_list)
