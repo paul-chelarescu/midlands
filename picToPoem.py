@@ -98,10 +98,11 @@ listOfTags = curatedListOfTags
 
 from watson_developer_cloud import ToneAnalyzerV3
 
+import auth
 
 tone_analyzer = ToneAnalyzerV3(
-        username='f0862e98-79e0-4643-afb0-4ce2eea971f4',
-        password='ciiTHIb61CRP',
+        username= auth.user,
+        password= auth.pas,
         version='2016-05-19')
 
 
